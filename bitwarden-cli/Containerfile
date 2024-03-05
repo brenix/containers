@@ -1,15 +1,12 @@
-FROM debian:latest
+FROM cgr.dev/chainguard/wolfi-base
 
-ARG BW_CLI_VERSION
+ARG BW_CLI_VERSION=2024.2.0
 
-RUN apt update && \
-    apt install -y wget unzip && \
-    wget https://github.com/bitwarden/clients/releases/download/cli-v${BW_CLI_VERSION}/bw-linux-${BW_CLI_VERSION}.zip && \
-    unzip bw-linux-${BW_CLI_VERSION}.zip && \
-    chmod +x bw && \
-    mv bw /usr/local/bin/bw && \
-    rm -rfv *.zip
+RUN apk add -u bash cronie supervisor curl unzip && \
+    curl -L -s -o bw.zip https://github.com/bitwarden/clients/releases/download/cli-v${BW_CLI_VERSION}/bw-linux-${BW_CLI_VERSION}.zip && \
+    unzip bw.zip -d /usr/local/bin && \
+    rm -rfv *.zip /tmp/* /var/cache/apk/*
 
-COPY entrypoint.sh /
+ADD fs /
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["supervisord", "--nodaemon", "--configuration", "/etc/supervisord.conf"]

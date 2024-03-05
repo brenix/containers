@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-set -e
+set -eo pipefail
 declare -x BW_SESSION
-
 bw login --apikey 1>/dev/null
 BW_SESSION=$(bw unlock --raw --passwordenv BW_PASSWORD)
 echo "Starting server"
