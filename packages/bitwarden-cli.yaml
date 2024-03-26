@@ -1,6 +1,6 @@
 package:
   name: bitwarden-cli
-  version: 2024.2.0
+  version: 2024.2.1
   description: Bitwarden CLI
   epoch: 0
   target-architecture:
@@ -18,7 +18,7 @@ environment:
 pipeline:
   - uses: fetch
     with:
-      expected-sha256: 836e7cccac3711df0d81644a73fa9c6fc97d7681c9b11eff7db2d20d9190f787
+      expected-sha256: 57e03bb38a5468d167e325e684bd9ff81fbfd0e8c88db70bd52f15042f5a3690
       uri: https://github.com/bitwarden/clients/releases/download/cli-v${{package.version}}/bw-linux-${{package.version}}.zip
       extract: false
 
